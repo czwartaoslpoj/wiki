@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add new query</title>
+</head>
+<body>
+<form action="{%url 'encyclopedia:add'%}", method="post">
+{% csrf_token %}
+<h2>Title:<h2>
+{{form.title}}
+<br>
+<h2>Content:</h2>
+{{form.content}}
+<br>
+<button type="submit">Safe</button>
+</form>
+</body>
+</html>
+
