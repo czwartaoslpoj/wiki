@@ -21,10 +21,7 @@ def index(request):
     })
 
 def showEntry(request, entry):
-    print(1)
-    print(entry)
     right_entry = util.get_entry(entry)
-    print(right_entry)
     if right_entry is None:
         return render(request, "encyclopedia/notfounderror.html")
     else:
@@ -69,19 +66,14 @@ def addEntry(request):
                 return render(request, "encyclopedia/alreadyexist.html")
             else:
                 util.save_entry(title, content)
-                entry = util.get_entry(title)
-                return render(request,"encyclopedia/entry.html", {
-                    "entry" : markdown2.markdown(entry),
-                    "form" : searchForm()
-
-                } )
+                return redirect("encyclopedia:wiki/entry", entry = title)
 
     return render(request, "encyclopedia/add.html", {
         "form": newQueryForm()
     })
 
-#def editEntry(request, entry):
-    #return render(request, 'encyclopedia/edit.html')
+def editEntry(request, entry):
+    return render(request, 'encyclopedia/edit.html')
 
 
 
