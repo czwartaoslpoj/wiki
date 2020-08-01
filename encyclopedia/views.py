@@ -22,7 +22,9 @@ def index(request):
 
 def showEntry(request, entry):
     print(1)
+    print(entry)
     right_entry = util.get_entry(entry)
+    print(right_entry)
     if right_entry is None:
         return render(request, "encyclopedia/notfounderror.html")
     else:
@@ -38,19 +40,14 @@ def search(request):
         if form.is_valid():
             query = form.cleaned_data["query"]
             if query in entries:
-                query = util.get_entry(query)
-                return render(request, "encyclopedia/entry.html", {
-                    "entry" : markdown2.markdown(query),
-                    "form" : searchForm()
-                } )
+                title = query
+                print(title)
+                return redirect("encyclopedia:wiki/entry", entry = title)
             elif query not in entries:
                 for entry in entries:
                     if query in entry:
-                        query = util.get_entry(entry)
-                        return render(request,"encyclopedia/entry.html", {
-                            "entry" : markdown2.markdown(query),
-                            "form" : searchForm()
-                        })
+                        title = entry
+                        return redirect("encyclopedia:wiki/entry", entry = entry)
             
             else:
                 return render(request, "encyclopedia/notfounderror.html", {
@@ -83,7 +80,8 @@ def addEntry(request):
         "form": newQueryForm()
     })
 
-
+#def editEntry(request, entry):
+    #return render(request, 'encyclopedia/edit.html')
 
 
 
